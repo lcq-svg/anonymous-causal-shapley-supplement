@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Anonymous Supplementary Material</title>
+  <style>
+    body { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; color: #111; font-family: Georgia, "Times New Roman", serif; line-height: 1.55; }
+    h1 { font-size: 1.8rem; margin-bottom: .3rem; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; border-bottom: 1px solid #bbb; padding-bottom: .25rem; }
+    h3 { font-size: 1rem; margin-top: 1.4rem; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0 18px; font-family: Arial, sans-serif; font-size: .92rem; }
+    th, td { border: 1px solid #999; padding: 7px 8px; text-align: left; vertical-align: top; }
+    th { background: #f3f3f3; }
+    .note { color: #444; }
+    a { color: #0645ad; }
+  </style>
+</head>
+<body>
+  <h1>Anonymous Supplement to the Second-Round Reviewer Response</h1>
+  <p class="note">This supplement contains the detailed numerical tables, threshold-sensitivity check, candidate-DAG schematic, and implementation-scope comparison referenced in the main OpenReview response.</p>
+
+  <h2>Table S1. Dispersion for manuscript Table 2</h2>
+  <p>Values are terminal risk ratios at budget two. Means and sample standard deviations are computed over 25 independently parameterized instances sharing one complete five-node CPDAG. The SD uses denominator 24; graph, outcome, and random-action uncertainty is integrated within each instance.</p>
+  <table>
+    <thead><tr><th>Policy</th><th>Exact label: mean +/- SD</th><th>10% label error: mean +/- SD</th></tr></thead>
+    <tbody>
+      <tr><td>Lookahead attribution risk</td><td>0.02096 +/- 0.01420</td><td>0.15491 +/- 0.02259</td></tr>
+      <tr><td>One-step attribution risk</td><td>0.02304 +/- 0.01723</td><td>0.15529 +/- 0.02268</td></tr>
+      <tr><td>Posterior width</td><td>0.02269 +/- 0.01769</td><td>0.16297 +/- 0.02663</td></tr>
+      <tr><td>Graph information</td><td>0.02322 +/- 0.01720</td><td>0.17454 +/- 0.02607</td></tr>
+      <tr><td>Sign-pattern information</td><td>0.07157 +/- 0.06740</td><td>0.24911 +/- 0.08485</td></tr>
+      <tr><td>Random</td><td>0.13613 +/- 0.01989</td><td>0.28727 +/- 0.02271</td></tr>
+    </tbody>
+  </table>
+  <p>The figure bands use the instance mean plus or minus 1.96 standard errors, namely mean +/- 1.96 SD/sqrt(25).</p>
+
+  <h2>Table S2. Threshold sensitivity for measured responses</h2>
+  <p>The screening rule is |mean(z_I)-mean(z_R)| &gt; k SE, with SE = sqrt(s_I^2/n_I + s_R^2/n_R). Here n_I = 1,000 and n_R = 10,000. Multipliers k = 2, 3, 4, and 5 produce the same candidate-set trajectory, 4 -&gt; 2 -&gt; 1.</p>
+  <table>
+    <thead><tr><th>Intervention and response</th><th>Mean difference</th><th>Estimated SE</th><th>|Delta|/SE</th></tr></thead>
+    <tbody>
+      <tr><td>green -&gt; current</td><td>10.99850</td><td>0.23591</td><td>46.62117</td></tr>
+      <tr><td>pol_1 -&gt; angle_1</td><td>58.22300</td><td>0.51832</td><td>112.32929</td></tr>
+    </tbody>
+  </table>
+  <p>This check describes stability for the supplied observations and is used only to support the Causal Chamber filtering protocol.</p>
+
+  <h2>Figure S1. Supplied Causal Chamber candidate DAGs</h2>
+  <p>Gray arrows are shared by all candidates; black arrows are the two varying directions. The prediction target vis_2 is not a node of this six-node candidate family. The measured green response retains G2 and G3; the measured pol_1 response then retains G3. The complete DAG schematic is included in the <a href="files/anonymous_supplement.pdf">supplementary PDF</a>.</p>
+
+  <h2>Table S3. Relationship between published methods and evaluated components</h2>
+  <table>
+    <thead><tr><th>Related method</th><th>Component evaluated here</th><th>Scope</th></tr></thead>
+    <tbody>
+      <tr><td>ABCI / Toth et al. (2022)</td><td>Graph-information objective within the common candidate model; Sections 5.2--5.4</td><td>Objective comparison; full ABCI pipeline not implemented</td></tr>
+      <tr><td>ABCD / Agrawal et al. (2019)</td><td>Information about an author-chosen attribution sign pattern; Sections 5.2--5.3</td><td>Adapted objective; full ABCD pipeline not implemented</td></tr>
+      <tr><td>MEC Shapley / Roos et al. (2026)</td><td>Candidate vectors computed with the same underlying evaluator; Section 5.7</td><td>Internal representation check; no independent estimator benchmark</td></tr>
+      <tr><td>Causal SHAP / Ng et al. (2025)</td><td>Local linear-Gaussian causal-strength weighting and normalization; Section 5.7</td><td>Adaptation with a different attribution target</td></tr>
+    </tbody>
+  </table>
+
+  <h2>References</h2>
+  <p>Agrawal, R., Squires, C., Yang, K., Shanmugam, K., and Uhler, C. (2019). ABCD-Strategy: Budgeted Experimental Design for Targeted Causal Structure Discovery. AISTATS, PMLR 89.</p>
+  <p>Holm, S. (1979). A Simple Sequentially Rejective Multiple Test Procedure. Scandinavian Journal of Statistics, 6, 65--70.</p>
+  <p>Ng, W. Y., Wang, L. R., Liu, S., and Fan, X. (2025). Causal SHAP: Feature Attribution with Dependency Awareness through Causal Discovery. IJCNN.</p>
+  <p>Roos, D., Gerwinn, S., van de Meent, J.-W., and Magliacane, S. (2026). Improving Local Explainability By Learning Causal Graphs From Data. TMLR.</p>
+  <p>Toth, C., Lorch, L., Knoll, C., Krause, A., Pernkopf, F., Peharz, R., and von Kügelgen, J. (2022). Active Bayesian Causal Inference. NeurIPS 35.</p>
+  <p>Wilcoxon, F. (1945). Individual Comparisons by Ranking Methods. Biometrics Bulletin, 1(6), 80--83.</p>
+
+  <p><a href="files/anonymous_supplement.pdf">Download the supplementary PDF</a></p>
+</body>
+</html>
